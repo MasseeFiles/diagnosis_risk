@@ -1,26 +1,35 @@
 package com.medilabo.diagnosis_risk;
 
 
+import com.medilabo.diagnosis_risk.model.NoteDto;
+import com.medilabo.diagnosis_risk.model.PatientDto;
 import com.medilabo.diagnosis_risk.model.PatientRisk;
 import com.medilabo.diagnosis_risk.repository.RiskToNoteRepository;
 import com.medilabo.diagnosis_risk.repository.RiskToPatientRepository;
 import com.medilabo.diagnosis_risk.service.RiskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class RiskServiceTests {
-    @Autowired
+//    @Autowired
+    @InjectMocks
     private RiskService riskService;
+//    private RiskToPatientRepository riskToPatientRepository = new RiskToPatientRepository();
+//    private RiskToNoteRepository riskToNoteRepository = new RiskToNoteRepository();
 
     @Mock
     private RiskToPatientRepository riskToPatientRepository;
@@ -30,8 +39,9 @@ public class RiskServiceTests {
 
     @BeforeEach
     public void setup() {
-        riskToPatientRepository = mock(RiskToPatientRepository.class);
-        riskToNoteRepository = mock(RiskToNoteRepository.class);
+//        riskToPatientRepository = mock(RiskToPatientRepository.class);
+//        riskToNoteRepository = mock(RiskToNoteRepository.class);
+        MockitoAnnotations.openMocks(this);// initialisation
     }
 
     @Test
@@ -83,25 +93,25 @@ public class RiskServiceTests {
         assertThat(riskLevelTest).isEqualTo("Early onset");
     }
 
-//    @Test
-//    void buildPatientRisk_Ok() {
-//        //GIVEN
-//        PatientDto patientDto = new PatientDto(1L, "firstName", "LastName" , LocalDate.of(2023, 12, 31), "F", "AA", "AA" );
-//
-//        when(riskToPatientRepository.getSinglePatientDto(1L)).thenReturn(patientDto);
-//
-//        List<NoteDto> listNoteDtoTest = new ArrayList<>();
-//        NoteDto noteDtoTest =  new NoteDto("id", 1L, "term1");
-//        listNoteDtoTest.add(noteDtoTest);
-//
-//        when(riskToNoteRepository.findNoteByCustomId(1L)).thenReturn(listNoteDtoTest);
-//
-//        //WHEN
-//        PatientRisk patientRiskTest = riskService.buildPatientRisk(1L);
-//        //THEN
-//        assertThat(patientRiskTest.getGender()).isEqualTo("M");
-//        assertThat(patientRiskTest.getAge()).isEqualTo(1);
-//        assertThat(patientRiskTest.getNotes().size()).isEqualTo(1);
-//    }
+    @Test
+    void buildPatientRisk_Ok() {
+        //GIVEN
+        PatientDto patientDto = new PatientDto(1L, "firstName", "LastName" , LocalDate.of(2023, 12, 31), "F", "AA", "AA" );
+
+        when(riskToPatientRepository.getSinglePatientDto(1L)).thenReturn(patientDto);
+
+        List<NoteDto> listNoteDtoTest = new ArrayList<>();
+        NoteDto noteDtoTest =  new NoteDto("id", 1L, "term1");
+        listNoteDtoTest.add(noteDtoTest);
+
+        when(riskToNoteRepository.findNoteByCustomId(1L)).thenReturn(listNoteDtoTest);
+
+        //WHEN
+        PatientRisk patientRiskTest = riskService.buildPatientRisk(1L);
+        //THEN
+        assertThat(patientRiskTest.getGender()).isEqualTo("M");
+        assertThat(patientRiskTest.getAge()).isEqualTo(1);
+        assertThat(patientRiskTest.getNotes().size()).isEqualTo(1);
+    }
 
 }
