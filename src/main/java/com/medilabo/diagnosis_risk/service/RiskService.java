@@ -18,8 +18,10 @@ import java.util.List;
 public class RiskService {
     @Autowired
     RiskToPatientRepository riskToPatientRepository;
+
     @Autowired
     RiskToNoteRepository riskToNoteRepository;
+
     private final List<String> triggers = Arrays.asList(
             "Hémoglobine A1C",
             "Microalbumine",
@@ -34,6 +36,12 @@ public class RiskService {
             "Réaction",
             "Anticorps"
     );
+
+    /**
+     *Methode servant à la determination du RiskLevel d'un patient donné en fonction
+     * des critères de selection demandés (age, sexe, nombre de declencheurs dans les
+     * notes du patient)
+     */
 
     public String assessRisk(PatientRisk patientRisk) {
 
@@ -62,6 +70,11 @@ public class RiskService {
         return riskLevel;
     }
 
+    /**
+     *Methode servant au comptage des declencheurs dans les
+     * notes du patien. Utilisée dans assessRisk()
+     */
+
     private int countTriggerTerms(List<String> notes) {
         int count = 0;
         for (String note : notes) {
@@ -73,6 +86,12 @@ public class RiskService {
         }
         return count;
     }
+
+    /**
+     *L'objet PatientRisk renvoyé par la methode contient toute les informations
+     * nécessaires à l'évaluation du riskLevel du patient
+     * @see #assessRisk(PatientRisk)
+     */
 
     public PatientRisk buildPatientRisk(Long id) {
         PatientDto patientDto = riskToPatientRepository.getSinglePatientDto(id);
