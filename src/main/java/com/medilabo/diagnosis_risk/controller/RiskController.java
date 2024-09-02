@@ -17,7 +17,7 @@ public class RiskController {
     @Autowired
     private RiskService riskService;
 
-    @GetMapping("/risk/{id}")
+    @GetMapping("/riskService/{id}")
     public String assessRisk(@PathVariable Long id) {
 
         logger.info("Requete pour obtenir l'evaluation du risque diabetique pour un patient");

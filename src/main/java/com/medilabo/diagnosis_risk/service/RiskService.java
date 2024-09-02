@@ -20,7 +20,7 @@ public class RiskService {
     RiskToPatientRepository riskToPatientRepository;
     @Autowired
     RiskToNoteRepository riskToNoteRepository;
-    private List<String> triggers = Arrays.asList(
+    private final List<String> triggers = Arrays.asList(
             "Hémoglobine A1C",
             "Microalbumine",
             "Taille",
