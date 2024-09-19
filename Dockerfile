@@ -29,7 +29,7 @@ WORKDIR /diagnosis_risk
 COPY --from=build /diagnosis_risk/target/diagnosis_risk-0.0.1-SNAPSHOT.jar diagnosis_risk.jar
 
 # Exposition du port d'accès à l'appli
-EXPOSE 8081
+EXPOSE 8085
 
 #RUN de l'appli (par defaut au demarrage du container)
 ENTRYPOINT ["java", "-Dspring.config.location=classpath:/application.properties", "-jar", "diagnosis_risk.jar"]

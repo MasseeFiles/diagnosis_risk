@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Repository
-@FeignClient(name = "diagnosisNote", url = "http://localhost:8084")
-//@FeignClient(name = "diagnosisNote", url = "http://localhost:8084", configuration = FeignClientConfig.class)
-
+@FeignClient(name = "toNoteViaGateway", url = "#{toGatewayServiceUrl}", configuration = FeignClientConfig.class)
+//@FeignClient(name = "ToDiagnosisNote", url = "http://localhost:8083")
 public interface RiskToNoteRepository {
-    @RequestMapping(method = RequestMethod.GET, value = "/noteService/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/notes/{id}")
     List<NoteDto> findNoteByCustomId(@PathVariable("id") Long id);
 
 }

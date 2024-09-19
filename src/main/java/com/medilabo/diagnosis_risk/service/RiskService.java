@@ -39,10 +39,9 @@ public class RiskService {
 
     /**
      *Methode servant à la determination du RiskLevel d'un patient donné en fonction
-     * des critères de selection demandés (age, sexe, nombre de declencheurs dans les
+     * des critères de sélection indiqués (age, sexe, nombre de declencheurs dans les
      * notes du patient)
      */
-
     public String assessRisk(PatientRisk patientRisk) {
 
         int triggerTermCount = countTriggerTerms(patientRisk.getNotes());
@@ -72,9 +71,9 @@ public class RiskService {
 
     /**
      *Methode servant au comptage des declencheurs dans les
-     * notes du patien. Utilisée dans assessRisk()
+     * notes du patient.
+     * @see #assessRisk(PatientRisk)
      */
-
     private int countTriggerTerms(List<String> notes) {
         int count = 0;
         for (String note : notes) {
@@ -88,11 +87,12 @@ public class RiskService {
     }
 
     /**
-     *L'objet PatientRisk renvoyé par la methode contient toute les informations
+     *Methode servant à la construction de l'objet PatientRisk utilisé par la
+     * methode assessRisk(PatientRisk).
+     *L'objet PatientRisk renvoyé contient toutes les informations
      * nécessaires à l'évaluation du riskLevel du patient
      * @see #assessRisk(PatientRisk)
      */
-
     public PatientRisk buildPatientRisk(Long id) {
         PatientDto patientDto = riskToPatientRepository.getSinglePatientDto(id);
 
