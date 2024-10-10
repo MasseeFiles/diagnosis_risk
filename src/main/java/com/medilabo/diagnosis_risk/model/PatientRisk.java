@@ -13,4 +13,5 @@ public class PatientRisk {
     private int age;
     private String gender;
     private List<String> notes;
+
 }
