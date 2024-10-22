@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Repository
-@FeignClient(name = "toPatientViaGateway", url = "#{toGatewayServiceUrl}",  configuration = FeignClientConfig.class)
-//@FeignClient(name = "toDiagnosisPatient", url = "http://localhost:8081")
+@FeignClient(name = "toDiagnosisPatient", url = "#{toPatientServiceUrl}", configuration = FeignClientConfig.class)
+//@FeignClient(name = "toDiagnosisPatient", url = "http://localhost:8081", configuration = FeignClientConfig.class)
 public interface RiskToPatientRepository {
     @GetMapping(value = "/patients/{id}")
     PatientDto getSinglePatientDto(@PathVariable("id") Long id);

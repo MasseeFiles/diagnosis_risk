@@ -7,22 +7,41 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
 public class FeignClientConfig {
-    @Value("${GATEWAY_IP}")
-    private String gatewayIp;
 
-    @Value("${GATEWAY_PORT}")
-    private int gatewayPort;
+    @Value("${NOTE_IP}")
+    private String noteIp;
+
+    @Value("${NOTE_PORT}")
+    private int notePort;
 
     @Bean
-    public String toGatewayServiceUrl() {
-        String uriGateway = UriComponentsBuilder.newInstance()
+    public String toNoteServiceUrl() {
+        String uriNote = UriComponentsBuilder.newInstance()
                 .scheme("http")
-                .host(gatewayIp)
-                .port(gatewayPort)
+                .host(noteIp)
+                .port(notePort)
                 .build()
                 .toUriString();
 
-        return uriGateway;
+        return uriNote;
+    }
+
+    @Value("${PATIENT_IP}")
+    private String patientIp;
+
+    @Value("${PATIENT_PORT}")
+    private int patientPort;
+
+    @Bean
+    public String toPatientServiceUrl() {
+        String uriPatient = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host(patientIp)
+                .port(patientPort)
+                .build()
+                .toUriString();
+
+        return uriPatient;
     }
 
     @Bean

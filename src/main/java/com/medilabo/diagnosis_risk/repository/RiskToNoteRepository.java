@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Repository
-@FeignClient(name = "toNoteViaGateway", url = "#{toGatewayServiceUrl}", configuration = FeignClientConfig.class)
-//@FeignClient(name = "ToDiagnosisNote", url = "http://localhost:8083")
+@FeignClient(name = "ToDiagnosisNote",  url = "#{toNoteServiceUrl}", configuration = FeignClientConfig.class)
+//@FeignClient(name = "ToDiagnosisNote", url = "http://localhost:8083", configuration = FeignClientConfig.class)
 public interface RiskToNoteRepository {
     @RequestMapping(method = RequestMethod.GET, value = "/notes/{id}")
     List<NoteDto> findNoteByCustomId(@PathVariable("id") Long id);

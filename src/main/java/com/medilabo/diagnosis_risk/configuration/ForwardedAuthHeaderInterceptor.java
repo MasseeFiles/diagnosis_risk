@@ -2,6 +2,9 @@ package com.medilabo.diagnosis_risk.configuration;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -14,22 +17,28 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class ForwardedAuthHeaderInterceptor implements RequestInterceptor {
 
+    private static final Logger logger = LogManager.getLogger("ForwardedAuthHeaderInterceptor");
+
     @Override
     public void apply(RequestTemplate requestTemplate) {
         ServletRequestAttributes requestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
         if (requestAttributes != null) {
-            String authorizationHeader =
-                    requestAttributes.getRequest().getHeader("Authorization");
+            HttpServletRequest request = requestAttributes.getRequest();
+            String authorizationHeader = request.getHeader("Authorization");
+
             if (authorizationHeader != null) {
-                System.out.println("Authorization header found in incoming request :" + authorizationHeader);
+
+                logger.info("Authorization header found in incoming request :" + authorizationHeader);
 
                 requestTemplate.header("Authorization", authorizationHeader);
+
             } else {
-                System.out.println("No authorization header found in incoming request");
+                logger.info("No authorization header found in incoming request");
             }
         }
     }
 
 }
+
